@@ -17,6 +17,10 @@ export const MainContainer = styled.section`
     gap: 10px;
   }
 
+  p {
+    font-size: 18px;
+  }
+
   @media only screen and (max-width: 500px) {
     .grid {
       grid-template-columns: repeat(1, 1fr);

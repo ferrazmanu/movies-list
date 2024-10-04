@@ -50,7 +50,6 @@ export default function MovieDetails() {
     return <p>Movie not found</p>;
   }
 
-  console.log(movie);
   return (
     <>
       <Header

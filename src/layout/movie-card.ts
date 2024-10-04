@@ -16,13 +16,6 @@ export const MovieCard = styled.li`
     object-fit: cover;
   }
 
-  .card-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-  }
-
   &:hover {
     transform: scale(1.1);
     z-index: 9;

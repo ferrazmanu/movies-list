@@ -2,9 +2,11 @@
 
 import { Button } from "@/components/button";
 import Loading from "@/components/loading";
+import { Paginate } from "@/components/paginate";
 import { IMAGE_BASE_URL } from "@/constants/imageBaseURL";
 import { ICategory } from "@/interfaces/category";
 import { IMovie } from "@/interfaces/movie";
+import { IPaginate } from "@/interfaces/paginate";
 import { CategoryList } from "@/layout/category-list";
 import { Header } from "@/layout/header";
 import { MovieCard } from "@/layout/movie-card";
@@ -26,16 +28,29 @@ const categoriesList: ICategory[] = [
 export default function MoviesList() {
   const [movies, setMovies] = useState<IMovie[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    categoriesList[0].route
+  );
+
+  const [paginate, setPaginate] = useState<IPaginate>({
+    currentPage: 1,
+    totalPages: 0,
+  });
 
   const fetchMovies = async (
-    selectedCategory: string = categoriesList[0].route
+    selectedCategory: string = categoriesList[0].route,
+    page: number = paginate.currentPage
   ) => {
     setLoading(true);
     try {
       const response = await api.get(
-        `${selectedCategory}?language=en-US&page=1`
+        `${selectedCategory}?language=en-US&page=${page}`
       );
       setMovies(response.data.results);
+      setPaginate({
+        currentPage: response.data.page,
+        totalPages: response.data.total_pages,
+      });
     } catch (err) {
       console.error(`Failed to fetch movies. Error: ${err}`);
     } finally {
@@ -44,8 +59,12 @@ export default function MoviesList() {
   };
 
   useEffect(() => {
-    fetchMovies();
+    fetchMovies(selectedCategory, 1);
   }, []);
+
+  const handlePageChange = (page: number) => {
+    fetchMovies(selectedCategory, page);
+  };
 
   return (
     <>
@@ -57,7 +76,8 @@ export default function MoviesList() {
             <li key={category.id}>
               <Button
                 onClick={() => {
-                  fetchMovies(category.route);
+                  fetchMovies(category.route, 1);
+                  setSelectedCategory(category.route);
                 }}
                 styleType="colorful"
                 text={category.title}
@@ -66,7 +86,7 @@ export default function MoviesList() {
           ))}
         </CategoryList>
       </Header>
-      <section>
+      <main>
         {loading ? (
           <Loading />
         ) : (
@@ -83,7 +103,6 @@ export default function MoviesList() {
                           fill
                           priority
                         />
-                        {/* <div className="card-info">{item.title}</div> */}
                       </Link>
                     </MovieCard>
                   );
@@ -92,7 +111,9 @@ export default function MoviesList() {
             )}
           </>
         )}
-      </section>
+      </main>
+
+      <Paginate paginate={paginate} handlePageChange={handlePageChange} />
     </>
   );
 }
