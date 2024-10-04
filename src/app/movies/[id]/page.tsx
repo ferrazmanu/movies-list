@@ -5,6 +5,7 @@ import Loading from "@/components/loading";
 import { IMAGE_BASE_URL } from "@/constants/imageBaseURL";
 import { IMovie } from "@/interfaces/movie";
 import { FixedBanner } from "@/layout/fixed-banner";
+import Footer from "@/layout/footer";
 import { Header } from "@/layout/header";
 import { MainContainer } from "@/layout/main-container";
 import api from "@/lib/axios";
@@ -112,6 +113,8 @@ export default function MovieDetails() {
           </p>
         </div>
       </MainContainer>
+
+      <Footer />
     </>
   );
 }

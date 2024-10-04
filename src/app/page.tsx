@@ -8,6 +8,7 @@ import { ICategory } from "@/interfaces/category";
 import { IMovie } from "@/interfaces/movie";
 import { IPaginate } from "@/interfaces/paginate";
 import { CategoryList } from "@/layout/category-list";
+import Footer from "@/layout/footer";
 import { Header } from "@/layout/header";
 import { MovieCard } from "@/layout/movie-card";
 import { MovieList } from "@/layout/movie-grid";
@@ -114,6 +115,8 @@ export default function MoviesList() {
       </main>
 
       <Paginate paginate={paginate} handlePageChange={handlePageChange} />
+
+      <Footer />
     </>
   );
 }
