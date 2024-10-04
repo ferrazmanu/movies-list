@@ -28,6 +28,7 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,300..900;1,300..900&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
         <GlobalStyles />
