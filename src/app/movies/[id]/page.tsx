@@ -20,7 +20,7 @@ export default function MovieDetails() {
         setMovie(response.data);
         setLoading(false);
       } catch (err) {
-        console.error("Failed to fetch movie details");
+        console.error(`Failed to fetch movie details. Error: ${err}`);
         setLoading(false);
       }
     }

@@ -37,7 +37,7 @@ export default function MoviesList() {
       );
       setMovies(response.data.results);
     } catch (err) {
-      console.error("Failed to fetch movies");
+      console.error(`Failed to fetch movies. Error: ${err}`);
     } finally {
       setLoading(false);
     }
