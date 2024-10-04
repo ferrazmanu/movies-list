@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 interface Props {
   backgroundImage: string;
+  pageType: "home" | "details";
 }
 
 export const Header = styled.header<Props>`
@@ -11,7 +12,8 @@ export const Header = styled.header<Props>`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 70dvh;
+
+  min-height: ${(props) => (props.pageType === "home" ? "70dvh" : "40dvh")};
   background-image: url(${(props) => props.backgroundImage});
   background-position: center center;
   background-repeat: no-repeat;
@@ -28,7 +30,9 @@ export const Header = styled.header<Props>`
     height: inherit;
   }
 
-  h1 {
+  h1,
+  h2,
+  button {
     position: relative;
     z-index: 9;
     color: #eeeeee;

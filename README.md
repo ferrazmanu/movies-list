@@ -7,7 +7,7 @@ This project is a React web application with TypeScript that uses TheMovieDB API
 1. Clone the repository to your local machine:
 
 ```bash
-git clone https://github.com/your-username/repository-name.git
+git clone https://github.com/ferrazmanu/movies-list.git
 ```
 
 2. Navigate to the project directory:

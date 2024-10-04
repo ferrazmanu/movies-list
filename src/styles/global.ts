@@ -24,9 +24,20 @@ const GlobalStyles = createGlobalStyle`
     overflow-x: hidden;
   }
 
-  h1{
+  h1, h2, h3, h4, h5, h6{
     font-family: "Dancing Script", cursive;
+  }
+
+  h1{
     font-size: 140px;
+  }
+
+  h2{
+    font-size: 90px;
+  }
+
+  h3{
+    font-size: 60px;
   }
 
   h1, h2, h3, h4, h5, h6, p, ul, li{
@@ -46,7 +57,14 @@ const GlobalStyles = createGlobalStyle`
   @media only screen and (max-width: 900px) {
     h1{
       font-size: 80px;
+    }
 
+    h2{
+      font-size: 60px;
+    }
+
+    h3{
+      font-size: 30px;
     }
   }
 `;

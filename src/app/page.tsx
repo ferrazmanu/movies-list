@@ -49,7 +49,7 @@ export default function MoviesList() {
 
   return (
     <>
-      <Header backgroundImage="/images/maxxxine-banner.jpg">
+      <Header backgroundImage="/images/maxxxine-banner.jpg" pageType="home">
         <h1>Movies List</h1>
 
         <CategoryList>

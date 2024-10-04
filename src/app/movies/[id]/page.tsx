@@ -1,7 +1,14 @@
 "use client";
 
+import { Button } from "@/components/button";
+import Loading from "@/components/loading";
+import { IMAGE_BASE_URL } from "@/constants/imageBaseURL";
 import { IMovie } from "@/interfaces/movie";
+import { FixedBanner } from "@/layout/fixed-banner";
+import { Header } from "@/layout/header";
+import { MainContainer } from "@/layout/main-container";
 import api from "@/lib/axios";
+import dayjs from "dayjs";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -12,6 +19,11 @@ export default function MovieDetails() {
 
   const [movie, setMovie] = useState<IMovie | null>(null);
   const [loading, setLoading] = useState(true);
+
+  const ADULT_KEYS = {
+    true: "Yes",
+    false: "No",
+  };
 
   const fetchMovie = async (id: string) => {
     if (id) {
@@ -32,18 +44,75 @@ export default function MovieDetails() {
   }, [movieId]);
 
   if (loading) {
-    return <p>Loading movie details...</p>;
+    return <Loading />;
   }
   if (!movie) {
     return <p>Movie not found</p>;
   }
 
+  console.log(movie);
   return (
     <>
-      <h1>{movie.title}</h1>
-      <p>Year: {movie.release_date}</p>
-      <p>Overview: {movie.overview}</p>
-      <button onClick={() => router.back()}>Back to Movies List</button>
+      <Header
+        backgroundImage={`${IMAGE_BASE_URL}${movie.poster_path}`}
+        pageType="details"
+      >
+        <h2>{movie.title}</h2>
+
+        <Button
+          onClick={() => router.back()}
+          text="Back to Movies List"
+          styleType="regular"
+        />
+      </Header>
+
+      <MainContainer>
+        <h3>"{movie.tagline || movie.title}"</h3>
+        <p style={{ textAlign: "center" }}>{movie.overview}</p>
+      </MainContainer>
+
+      <FixedBanner image={`${IMAGE_BASE_URL}${movie.backdrop_path}`} />
+
+      <MainContainer>
+        <div className="grid">
+          <p>
+            <b>Release Date:</b>{" "}
+            {dayjs(movie.release_date).format("MMMM D, YYYY")}
+          </p>
+          <p>
+            <b>Rating:</b> {movie.vote_average.toFixed(1)}/10
+          </p>
+          <p>
+            <b>Adult:</b> {ADULT_KEYS[movie.adult ? "true" : "false"]}
+          </p>
+          <p>
+            <b>
+              Genre{movie.genres && movie.genres?.length > 1 ? "s" : null}:{" "}
+            </b>
+            {movie.genres?.map((item) => item.name).join(", ")}
+          </p>
+          <p>
+            <b>Runtime:</b> {movie.runtime}min
+          </p>
+          <p>
+            <b>Status:</b> {movie.status}
+          </p>
+          <p>
+            <b>
+              Spoken Language
+              {movie.spoken_languages && movie.spoken_languages?.length > 1
+                ? "s"
+                : null}
+              :
+            </b>{" "}
+            {movie.spoken_languages?.map((item) => item.name).join(", ")}
+          </p>
+          <p>
+            <b>Produced By: </b>
+            {movie.production_companies?.map((item) => item.name).join(", ")}
+          </p>
+        </div>
+      </MainContainer>
     </>
   );
 }

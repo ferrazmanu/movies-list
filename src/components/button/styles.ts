@@ -64,7 +64,12 @@ export const Wrapper = styled.button<Props>`
   font-weight: bold;
   font-size: 16px;
 
-  ${(props) => props.styleType === "colorful" && colorfulStyles}
+  ${(props) =>
+    props.styleType === "colorful"
+      ? colorfulStyles
+      : css`
+          border: 1px solid #fff;
+        `}
 
   @media only screen and (max-width: 900px) {
     font-size: 12px;
