@@ -1,9 +1,19 @@
 "use client";
 
+import { Button } from "@/components/button";
+import Loading from "@/components/loading";
+import { IMAGE_BASE_URL } from "@/constants/imageBaseURL";
 import { ICategory } from "@/interfaces/category";
 import { IMovie } from "@/interfaces/movie";
+import { CategoryList } from "@/layout/category-list";
+import { Header } from "@/layout/header";
+import { MovieCard } from "@/layout/movie-card";
+import { MovieList } from "@/layout/movie-grid";
+
 import api from "@/lib/axios";
+import Image from "next/image";
 import Link from "next/link";
+
 import { useEffect, useState } from "react";
 
 const categoriesList: ICategory[] = [
@@ -38,41 +48,51 @@ export default function MoviesList() {
   }, []);
 
   return (
-    <div>
-      <h1>Movies List</h1>
-      <ul>
-        {categoriesList.map((category) => (
-          <li key={category.id}>
-            <button
-              onClick={() => {
-                fetchMovies(category.route);
-              }}
-            >
-              {category.title}
-            </button>
-          </li>
-        ))}
-      </ul>
+    <>
+      <Header backgroundImage="/images/maxxxine-banner.jpg">
+        <h1>Movies List</h1>
 
+        <CategoryList>
+          {categoriesList.map((category) => (
+            <li key={category.id}>
+              <Button
+                onClick={() => {
+                  fetchMovies(category.route);
+                }}
+                styleType="colorful"
+                text={category.title}
+              />
+            </li>
+          ))}
+        </CategoryList>
+      </Header>
       <section>
         {loading ? (
-          <span> Loading...</span>
+          <Loading />
         ) : (
           <>
             {movies && (
-              <ul>
+              <MovieList>
                 {movies.map((item) => {
                   return (
-                    <li key={item.id}>
-                      <Link href={`/movies/${item.id}`}>{item.title}</Link>
-                    </li>
+                    <MovieCard key={item.id}>
+                      <Link href={`/movies/${item.id}`}>
+                        <Image
+                          alt={item.title}
+                          src={`${IMAGE_BASE_URL}${item.poster_path}`}
+                          fill
+                          priority
+                        />
+                        {/* <div className="card-info">{item.title}</div> */}
+                      </Link>
+                    </MovieCard>
                   );
                 })}
-              </ul>
+              </MovieList>
             )}
           </>
         )}
       </section>
-    </div>
+    </>
   );
 }

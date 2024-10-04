@@ -39,11 +39,11 @@ export default function MovieDetails() {
   }
 
   return (
-    <div>
+    <>
       <h1>{movie.title}</h1>
       <p>Year: {movie.release_date}</p>
       <p>Overview: {movie.overview}</p>
       <button onClick={() => router.back()}>Back to Movies List</button>
-    </div>
+    </>
   );
 }
